@@ -35,9 +35,10 @@
  * @param {object} obj
  * @return {object}
  */
-var keyMirror = function(obj) {
+var keyMirror = function(obj, prefix) {
   var ret = {};
   var key;
+  prefix = prefix || '';
   if (!(obj instanceof Object && !Array.isArray(obj))) {
     throw new Error('keyMirror(...): Argument must be an object.');
   }
@@ -45,7 +46,13 @@ var keyMirror = function(obj) {
     if (!obj.hasOwnProperty(key)) {
       continue;
     }
-    ret[key] = key;
+
+    if (obj[key] instanceof Object) {
+      ret[key] = keyMirror(obj[key], prefix+key+'_');
+    }
+    else {
+      ret[key] = prefix + key;
+    }
   }
   return ret;
 };

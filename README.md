@@ -33,3 +33,23 @@ var _ = require('lodash');
 _.mixin({keyMirror: require('keyMirror')});
 // Can now be used as _.keyMirror(object)
 ```
+
+Fork reason
+-----------
+Allow nested declarations.
+This allow you to have nice constants nesting.
+
+```javascript
+var keyMirror = require('keyMirror');
+var COLORS = keyMirror({
+    blue: null,
+    red: null,
+    CYMK: {
+        cyan:null,
+        yellow:null
+    }
+});
+var myColor = COLORS.blue;
+var isColorValid = !!COLORS[myColor];
+COLORS.CYMK.cyan === 'CYMK_cyan';
+```
